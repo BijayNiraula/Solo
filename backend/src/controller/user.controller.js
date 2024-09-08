@@ -19,6 +19,7 @@ class UserController {
       next(e);
     }
   }
+
   async signup(req, res, next) {
     try {
       const { firstName, lastName, password, email } = req.body;
@@ -112,6 +113,85 @@ class UserController {
       res.status(200).send({
         status: "success",
         message: "event created successfully",
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+  async createSubUser(req, res, next) {
+    try {
+      const { email, password, userName, jwt } = req.body;
+      if (!email || !password || !userName || !jwt) {
+        throw errorThrower(400, "please provide all the fields");
+      }
+      const results = await UserService.createSubUser(
+        userName,
+        email,
+        password,
+        jwt
+      );
+      res.status(200).send({
+        status: "success",
+        message: "subUser created successfully",
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getRegistrationForm(req, res, next) {
+    try {
+      const { id } = req.body;
+      if (!id) {
+        throw errorThrower(400, "please provide all the field");
+      }
+      const result = await UserService.getRegistrationForm(id);
+      res.status(200).send({
+        status: "success",
+        data: result,
+        message: "subUser created successfully",
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async register(req, res, next) {
+    try {
+      const { email, firstName, lastName, age, face, eventId } = req.body;
+      if (!email || !firstName || !lastName || !age || !face || eventId) {
+        throw errorThrower(400, "please provide all the field");
+      }
+      const result = await UserService.register(
+        email,
+        firstName,
+        lastName,
+        age,
+        face,
+        eventId
+      );
+
+      res.status(200).send({
+        status: "success",
+        message: "register successfully",
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getRegistrations(req, res, next) {
+    try {
+      const { eventId } = req.body;
+      if (!eventId) {
+        throw errorThrower(400, "please provide all the field");
+      }
+      const result = await UserService.getRegistrations(eventId);
+
+      res.status(200).send({
+        status: "success",
+        data: result,
+        message: "register successfully",
       });
     } catch (e) {
       next(e);

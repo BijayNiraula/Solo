@@ -6,7 +6,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import LiveTvIcon from "@mui/icons-material/LiveTv";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import SpeedIcon from "@mui/icons-material/Speed";
+import EventIcon from "@mui/icons-material/Event";
+import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -19,9 +24,13 @@ import Typography from "@mui/material/Typography";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import Events from "../pages/events/Events";
+import Events from "../pages/Events/Events";
 import Dashboard from "../pages/dashboard/Dashboard";
 import { useNavigate } from "react-router-dom";
 import Registrations from "../pages/registrations/Registrations";
+import UserRegistration from "../pages/userRegistration/UserRegistration";
+import LiveTrack from "../pages/LiveTrack/LiveTrack";
+import DeepScan from "../pages/DeepScan/DeepScan.jsx";
 
 const drawerWidth = 240;
 
@@ -55,15 +64,15 @@ function ResponsiveDrawer(props) {
         <ListItem disablePadding>
           <ListItemButton onClick={() => navigate("/dashboard")}>
             <ListItemIcon>
-              <MailIcon />
+              <SpeedIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => navigate("/Events")}>
             <ListItemIcon>
-              <MailIcon />
+              <EventIcon />
             </ListItemIcon>
             <ListItemText primary="Events" />
           </ListItemButton>
@@ -73,9 +82,25 @@ function ResponsiveDrawer(props) {
         <ListItem disablePadding>
           <ListItemButton onClick={() => navigate("/registration")}>
             <ListItemIcon>
-              <MailIcon />
+              <HowToRegIcon />
             </ListItemIcon>
             <ListItemText primary="Registrations" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => navigate("/livetrack")}>
+            <ListItemIcon>
+              <LiveTvIcon />
+            </ListItemIcon>
+            <ListItemText primary="livetrack" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => navigate("/deepscan")}>
+            <ListItemIcon>
+              <DocumentScannerIcon />
+            </ListItemIcon>
+            <ListItemText primary="deepscan" />
           </ListItemButton>
         </ListItem>
       </List>
@@ -166,6 +191,9 @@ function ResponsiveDrawer(props) {
 
         <Routes>
           <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/events" element={<Events />}></Route>
+          <Route path="/livetrack" element={<LiveTrack />}></Route>
+          <Route path="/deepscan" element={<DeepScan />}></Route>
           <Route path="/registration" element={<Registrations />}></Route>
         </Routes>
       </Box>

@@ -17,13 +17,13 @@ export const signupThunk = (email, password, firstName, lastName) => {
     return data;
   };
 };
-export const loginThunk = (email, password) => {
+export const loginThunk = (email, password, role) => {
   return async function loginAsyncThunk(dispatch) {
     const data = await fetchData(
       `${import.meta.env.VITE_SERVER_URL}/user/login`,
       {
         method: "POST",
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, role }),
         headers: {
           "content-type": "application/json",
         },
@@ -97,6 +97,28 @@ export const createEvent = (
           regStart,
           regEnd,
           eventLocation,
+          jwt: getLocalStorage("auth").jwt,
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
+    console.log(data);
+    return data;
+  };
+};
+
+export const createSubUser = (userName, email, password) => {
+  return async function createSubUserAsyncThunk(dispatch) {
+    const data = await fetchData(
+      `${import.meta.env.VITE_SERVER_URL}/user/createSubUser`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+          userName,
           jwt: getLocalStorage("auth").jwt,
         }),
         headers: {

@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import logo from "../../assets/Logo.jpg";
 import { ArrowBack } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
@@ -60,7 +61,17 @@ export default function Signup() {
             <ArrowBack />
           </Link>
         </div>
-
+        <div className="flex justify-center">
+          <img
+            width={100}
+            height={100}
+            style={{
+              borderRadius: "100%",
+            }}
+            src={logo}
+            alt=""
+          />
+        </div>
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>

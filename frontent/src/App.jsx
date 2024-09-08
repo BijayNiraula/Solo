@@ -11,6 +11,8 @@ import "../node_modules/react-toastify/dist/ReactToastify.min.css";
 import { errorToast } from "./helper/toast";
 import { getLocalStorage } from "./helper/localstorage";
 import ResponsiveDrawer from "./common/ResponsiveDrawer";
+import UserRegistration from "./pages/userRegistration/UserRegistration";
+import InvalidPage from "./pages/invalid/InvalidPage";
 const App = () => {
   const { authenticated, data, status } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -22,6 +24,23 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    async function loadModel() {
+      const MODEL_URL = "http://localhost:5173/model";
+      Promise.all([
+        // window.faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
+        window.faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+
+        window.faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+        window.faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
+        window.faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL),
+      ])
+        .then(() => s())
+        .catch((error) => console.log("error when load model"));
+    }
+    loadModel();
+  }, []);
+
   // if (status == "loading") {
   //   return <LoadingScreen />;
   // }
@@ -30,8 +49,13 @@ const App = () => {
       <div>
         <ToastContainer />
         <Routes>
-          <Route path="*" element={<Login />}></Route>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="*" element={<InvalidPage />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
+          <Route
+            path="/registrationform/:id"
+            element={<UserRegistration />}
+          ></Route>
         </Routes>
       </div>
     );

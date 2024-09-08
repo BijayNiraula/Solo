@@ -6,21 +6,29 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import logo from "../../assets/Logo.jpg";
 import Container from "@mui/material/Container";
 import { login, loginThunk } from "../../store/slices/auth.slice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { errorToast, successToast } from "../../helper/toast";
+import Switch from "@mui/material/Switch";
+
+const label = { inputProps: { "aria-label": "Switch demo" } };
 export default function Login() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [subUser, setSubUser] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     const data = new FormData(event.currentTarget);
 
     const result = await dispatch(
-      await loginThunk(data.get("email"), data.get("password"))
+      await loginThunk(
+        data.get("email"),
+        data.get("password", subUser ? "subUser" : "user")
+      )
     );
     if (result.status == "success") {
       successToast(result.message);
@@ -45,6 +53,17 @@ export default function Login() {
           alignItems: "center",
         }}
       >
+        <div className="flex justify-center">
+          <img
+            width={100}
+            height={100}
+            style={{
+              borderRadius: "100%",
+            }}
+            src={logo}
+            alt=""
+          />
+        </div>
         <Typography component="h1" variant="h5">
           Log in
         </Typography>
@@ -109,6 +128,15 @@ export default function Login() {
               </Link>
             </Grid>
           </Grid>
+          <div className="flex justify-end mt-3 align-middle">
+            Sub User Login :{" "}
+            <Switch
+              onChange={(e) => {
+                setSubUser(e.target.chekced);
+              }}
+              {...label}
+            />
+          </div>
         </Box>
       </Box>
     </Container>
