@@ -1,3 +1,8 @@
+## Db Diagram
+![image](https://github.com/user-attachments/assets/a125cc02-ec3d-4890-a2dc-e3cadf0accc1)
+
+
+
 # FaceLink - Event Management with Facial Recognition
 
 **Description**  
